@@ -5,6 +5,7 @@ import os
 import traceback
 
 JWT_SECRET = os.getenv("JWT_SECRET", "secret")
+MASTER_KEY = os.getenv("LITELLM_MASTER_KEY", "sk-master-1234")
 
 
 def map_role(role_str: str) -> LitellmUserRoles:
@@ -19,8 +20,20 @@ def map_role(role_str: str) -> LitellmUserRoles:
 
 
 async def user_api_key_auth(request: Request, api_key: str) -> UserAPIKeyAuth:
-    """Authenticate user using JWT-based API key."""
+    """Authenticate user using either a JWT-based API key or master key."""
 
+    # Master key override
+    if api_key == MASTER_KEY:
+        return UserAPIKeyAuth(
+            api_key=api_key,
+            user_id="default_user_id",
+            user_role=LitellmUserRoles.PROXY_ADMIN,
+            user_email="admin@litellm.local",
+            metadata={"team": "admin"},
+            models=["*"],  # full access
+        )
+
+    # JWT authentication
     try:
         decoded = jwt.decode(api_key, JWT_SECRET, algorithms=["HS256"])
 
@@ -31,7 +44,6 @@ async def user_api_key_auth(request: Request, api_key: str) -> UserAPIKeyAuth:
         models = decoded.get("models", ["my-mock-model"])
 
         return UserAPIKeyAuth(
-            api_key=api_key,
             user_id=user_id,
             user_email=user_email,
             user_role=role,
