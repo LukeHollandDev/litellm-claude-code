@@ -19,7 +19,9 @@ services:
       - db
     environment:
       LITELLM_MASTER_KEY: sk-master-1234
+      LITELLM_SALT_KEY: sk-salt-1234
       DATABASE_URL: postgresql://liteuser:litepass@db:5432/litellm_db
+      JWT_SECRET: secret
     ports:
       - "4000:4000"
     volumes:
