@@ -1,6 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "apiKeyHelper": "/Users/lukeholland/Projects/litellm-claude-code/.claude/get-api-key.sh",
+  "alwaysThinkingEnabled": false,
   "env": {
     "ANTHROPIC_BASE_URL": "http://localhost:4000",
     "ANTHROPIC_MODEL": "qwen3-coder-30b",

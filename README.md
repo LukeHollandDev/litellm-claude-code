@@ -39,3 +39,9 @@ directory.
 
 LiteLLM can be configured to use the `litellm/custom_auth.py` the code can be uncommented in the `litellm/config.yml`
 and in the `docker-compose.yml`. (this is just experimental to test the behaviour of the feature)
+
+### LM Studio
+
+The current LiteLLM configuration specifies usage of LM Studio, this can be changed by updating `litellm/config.yml`.
+But for the existing configuration download [LM Studio](https://lmstudio.ai/) and download `qwen3-coder-30b` model in LM
+Studio. I recommend using a high-context window, over 20k minimum. Claude Code uses A LOT of tokens.
